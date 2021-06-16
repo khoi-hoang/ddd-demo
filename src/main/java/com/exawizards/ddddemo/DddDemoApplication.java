@@ -9,7 +9,6 @@ public class DddDemoApplication {
 
     public static void main(String[] args) {
         var app = new SpringApplication(DddDemoApplication.class);
-        app.setWebApplicationType(WebApplicationType.NONE);
         app.run();
     }
 }

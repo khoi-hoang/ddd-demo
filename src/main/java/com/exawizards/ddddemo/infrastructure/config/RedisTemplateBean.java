@@ -10,7 +10,7 @@ public class RedisTemplateBean {
 
     @Bean
     public StringRedisTemplate redisTemplate() {
-        StringRedisTemplate template = new StringRedisTemplate();
+        var template = new StringRedisTemplate();
         template.setConnectionFactory(new JedisConnectionFactory());
         return template;
     }
