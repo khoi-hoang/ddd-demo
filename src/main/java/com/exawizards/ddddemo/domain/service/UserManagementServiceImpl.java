@@ -22,6 +22,11 @@ public class UserManagementServiceImpl implements UserManagementService {
             throw new UserManagementException("Insufficient permissions to create users.", null);
         }
 
+        // Validate user object before saving user
+        if (user == null) {
+            throw new UserManagementException("Cannot create null user", null); 
+        }
+
         try {
             userRepository.saveUser(user);
         } catch (UserRepositoryException e) {
