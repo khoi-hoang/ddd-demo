@@ -49,6 +49,19 @@ class UserManagementServiceImplTest {
             underTest.createUser(user);
         });
         assertEquals("Insufficient permissions to create users.", e.getMessage(), "Message is wrong!");
+        // isAdmin() should be always called! Otherwise there would be a chance
+        // that a normal user accidentaly creates users.
+        verify(mockedAuthenticationService, times(1)).isAdmin();
+    }
+
+    @Test
+    void createUser_Failed_NullUser() throws UserRepositoryException {
+        when(mockedAuthenticationService.isAdmin()).thenReturn(true);
+
+        Exception e = assertThrows(UserManagementException.class, () -> {
+            underTest.createUser(null);
+        });
+        assertEquals("Cannot create null user", e.getMessage(), "Message is wrong!");
     }
 
     @Test
@@ -57,6 +70,9 @@ class UserManagementServiceImplTest {
         User user = new User("abc", "khoi", "exa");
         underTest.createUser(user);
         verify(mockedUserRepository).saveUser(new User("abc", "khoi", "exa"));
+        // isAdmin() should be always called! Otherwise there would be a chance
+        // that a normal user accidentaly creates users.
+        verify(mockedAuthenticationService, times(1)).isAdmin();
     }
 
     @Test
