@@ -18,13 +18,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public void createUser(User user) throws UserManagementException {
-        if (!authenticationService.isAdmin()) {
-            throw new UserManagementException("Insufficient permissions to create users.", null);
-        }
-
-        // Validate user object before saving user
+        // Check input first (fail first)
         if (user == null) {
             throw new UserManagementException("Cannot create null user", null); 
+        }
+
+        if (!authenticationService.isAdmin()) {
+            throw new UserManagementException("Insufficient permissions to create users.", null);
         }
 
         try {
